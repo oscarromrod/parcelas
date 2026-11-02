@@ -1,0 +1,17 @@
+body {
+    min-height: 100vh;
+    background:
+            linear-gradient(rgba(248, 249, 250, 0.78), rgba(248, 249, 250, 0.78)),
+            url("../images/fondo.jpg") center / cover fixed;
+}
+
+.card {
+    background-color: rgba(255, 255, 255, 0.50);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.navbar {
+    border-radius: 10px;
+    overflow: hidden;
+}
