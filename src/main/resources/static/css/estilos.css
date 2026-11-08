@@ -15,3 +15,12 @@ body {
     border-radius: 10px;
     overflow: hidden;
 }
+
+.superficie-total {
+    background-color: rgba(25, 135, 84, 0.12);
+    border-left: 5px solid #198754;
+    border-radius: 8px;
+    padding: 15px 20px;
+    font-weight: bold;
+    color: #146c43;
+}
