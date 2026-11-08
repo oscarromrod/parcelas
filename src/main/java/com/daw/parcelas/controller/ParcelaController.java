@@ -13,10 +13,12 @@ public class ParcelaController {
 
     private final ParcelaService parcelaService;
 
+    //Constructor
     public ParcelaController(ParcelaService parcelaService) {
         this.parcelaService = parcelaService;
     }
 
+    //Lista de todas las parcelas
     @GetMapping
     public String listar(Model model) {
         var parcelas = parcelaService.listarTodas();
@@ -24,6 +26,7 @@ public class ParcelaController {
         return "parcelas/lista";
     }
 
+    //Muestra el detalle de una parcela por su id
     @GetMapping("/{id}")
     public String detalle(@PathVariable Long id, Model model) {
         var parcela = parcelaService.buscarPorId(id);
@@ -31,6 +34,7 @@ public class ParcelaController {
         return "parcelas/detalle";
     }
 
+    //Muestra el formulario para crear una nueva parcela
     @GetMapping("/nueva")
     public String nueva(Model model) {
         model.addAttribute("parcela", new Parcela());
@@ -38,12 +42,14 @@ public class ParcelaController {
         return "parcelas/formulario";
     }
 
+    //Guarda la parcela recibida desde el formulario y redirige a la lista de parcelas
     @PostMapping
     public String guardar(@ModelAttribute("parcela") Parcela parcela) {
         parcelaService.guardar(parcela);
         return "redirect:/parcelas";
     }
 
+    //Elimina la parcela con el id recibido y redirige a la lista de parcelas
     @PostMapping("/{id}/eliminar")
     public String eliminar(@PathVariable Long id) {
         parcelaService.eliminar(id);
