@@ -18,11 +18,12 @@ public class ParcelaController {
         this.parcelaService = parcelaService;
     }
 
-    //Lista de todas las parcelas
+    //Lista de todas las parcelas y la superficie total de todas ellas
     @GetMapping
     public String listar(Model model) {
         var parcelas = parcelaService.listarTodas();
         model.addAttribute("parcelas", parcelas);
+        model.addAttribute("superficieTotal", parcelaService.superficieTotal());
         return "parcelas/lista";
     }
 
@@ -55,4 +56,7 @@ public class ParcelaController {
         parcelaService.eliminar(id);
         return "redirect:/parcelas";
     }
+
+
+
 }
