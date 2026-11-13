@@ -1,14 +1,14 @@
 <!doctype html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="~{parcelas/fragments/layout :: head('Listado de parcelas')}"></head>
+<head th:replace="~{fragments/layout :: head('Listado de parcelas')}"></head>
 
 <body>
 
-<nav th:replace="~{parcelas/fragments/layout :: navbar}"></nav>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
 
 <div class="d-flex">
-    <aside th:replace="~{parcelas/fragments/layout :: sidebar('parcelas')}"></aside>
+    <aside th:replace="~{fragments/layout :: sidebar('parcelas')}"></aside>
 
     <main class="app-main flex-grow-1 p-3 p-lg-4">
 
@@ -68,11 +68,11 @@
     </div>
 
 </div>
-        <footer th:replace="~{parcelas/fragments/layout :: footer}"></footer>
+        <footer th:replace="~{fragments/layout :: footer}"></footer>
     </main>
 </div>
 
-<th:block th:replace="~{parcelas/fragments/layout :: scripts}"></th:block>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
 
 </body>
 </html>
