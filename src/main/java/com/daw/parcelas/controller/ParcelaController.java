@@ -18,12 +18,22 @@ public class ParcelaController {
         this.parcelaService = parcelaService;
     }
 
-    //Lista de todas las parcelas y la superficie total de todas ellas
+    //Lista de parcelas, con opción de filtrar por nombre y tipo de cultivo.
+    //Muestra la superficie total de todas las parcelas
     @GetMapping
-    public String listar(Model model) {
-        var parcelas = parcelaService.listarTodas();
+    public String listar(@RequestParam (required = false) String q,
+                         @RequestParam (required = false) String tipo,
+                         Model model) {
+        if (q == null) q = "";
+        if (tipo == null) tipo = "TODOS";
+
+        var parcelas = parcelaService.buscarPorNombreYTipo(q, tipo);
+
         model.addAttribute("parcelas", parcelas);
         model.addAttribute("superficieTotal", parcelaService.superficieTotal());
+        model.addAttribute("tipos", TipoCultivo.values());
+        model.addAttribute("q", q);
+        model.addAttribute("tipo", tipo);
         return "parcelas/lista";
     }
 
@@ -39,6 +49,15 @@ public class ParcelaController {
     @GetMapping("/nueva")
     public String nueva(Model model) {
         model.addAttribute("parcela", new Parcela());
+        model.addAttribute("tipos", TipoCultivo.values());
+        return "parcelas/formulario";
+    }
+
+    //Muestra el formulario para editar una parcela existente
+    @GetMapping("/editar/{id}")
+    public String editar(@PathVariable Long id, Model model) {
+        var parcela = parcelaService.buscarPorId(id);
+        model.addAttribute("parcela", parcela);
         model.addAttribute("tipos", TipoCultivo.values());
         return "parcelas/formulario";
     }
