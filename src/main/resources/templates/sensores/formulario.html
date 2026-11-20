@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: head('Sensores')}"></head>
+
+<body>
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="d-flex">
+    <aside th:replace="~{fragments/layout :: sidebar('sensores')}"></aside>
+
+    <main class="app-main flex-grow-1 p-3 p-lg-4">
+
+        <div class="container mt-4">
+            <div class="card mt-3 shadow-sm border-0 mx-auto" style="max-width: 600px;">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"
+                        th:text="${sensor.id != null ? 'Editar sensor' : 'Registrar sensor'}">
+                        Registrar sensor
+                    </h5>
+                </div>
+
+                <div class="card-body">
+                    <form th:action="@{/sensors/save}"
+                          th:object="${sensor}"
+                          method="post">
+
+                        <input type="hidden" th:field="*{id}">
+
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Nombre</label>
+                            <input id="name" type="text"
+                                   th:field="*{name}"
+                                   class="form-control"
+                                   required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="model" class="form-label">Modelo</label>
+                            <input id="model" type="text"
+                                   th:field="*{model}"
+                                   class="form-control"
+                                   required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="tipo" class="form-label">Tipo de sensor</label>
+                            <select id="tipo" th:field="*{tipo}"
+                                    class="form-select"
+                                    required>
+                                <option value="">-- Selecciona --</option>
+                                <option th:each="t : ${tipos}"
+                                        th:value="${t}"
+                                        th:text="${t}">
+                                    Tipo
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="unidadMedida" class="form-label">Unidad de medida</label>
+                            <input id="unidadMedida" type="text"
+                                   th:field="*{unidadMedida}"
+                                   class="form-control"
+                                   required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="estado" class="form-label">Estado</label>
+                            <input id="estado" type="text"
+                                   th:field="*{estado}"
+                                   class="form-control"
+                                   required>
+                        </div>
+
+                        <div class="row g-2">
+                            <div class="col-md">
+                                <div class="mb-3">
+                                    <label for="latitud" class="form-label">Latitud</label>
+                                    <input type="text" class="form-control" id="latitud" th:field="*{latitud}" required>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="mb-3">
+                                    <label for="longitud" class="form-label">Longitud</label>
+                                    <input type="text" class="form-control" id="longitud" th:field="*{longitud}" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                        <a th:href="@{/sensors}" class="btn btn-outline-secondary">
+                            Cancelar
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <footer th:replace="~{fragments/layout :: footer}"></footer>
+    </main>
+</div>
+
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>
