@@ -3,8 +3,10 @@ package com.daw.parcelas.controller;
 import com.daw.parcelas.model.Parcela;
 import com.daw.parcelas.model.TipoCultivo;
 import com.daw.parcelas.services.ParcelaService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -64,7 +66,11 @@ public class ParcelaController {
 
     //Guarda la parcela recibida desde el formulario y redirige a la lista de parcelas
     @PostMapping
-    public String guardar(@ModelAttribute("parcela") Parcela parcela) {
+    public String guardar(@Valid @ModelAttribute ("parcela") Parcela parcela, BindingResult resultado, Model model) {
+        if (resultado.hasErrors()){
+            model.addAttribute("tipos", TipoCultivo.values());
+            return "parcelas/formulario";
+        }
         parcelaService.guardar(parcela);
         return "redirect:/parcelas";
     }
