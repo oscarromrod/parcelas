@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Detalle de sensor')}"></head>
+<body>
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="d-flex">
+    <aside th:replace="~{fragments/layout :: sidebar('sensores')}"></aside>
+
+    <main class="app-main flex-grow-1 p-3 p-lg-4">
+        <div class="container mt-4">
+
+            <div class="card mt-3 shadow-sm border-0 mx-auto" style="max-width: 600px;">
+                <h4 class="mt-3 text-center">Detalles del sensor</h4>
+                <div class="card-body p-4 p-md-5">
+                    <h4 class="card-title mb-4" th:text="${sensor.name}">
+                        Nombre del sensor
+                    </h4>
+
+                    <dl class="row mb-0">
+                        <dt class="col-sm-4">Identificador</dt>
+                        <dd class="col-sm-8" th:text="${sensor.id}">1</dd>
+
+                        <dt class="col-sm-4">Modelo</dt>
+                        <dd class="col-sm-8" th:text="${sensor.model}">Modelo</dd>
+
+                        <dt class="col-sm-4">Tipo</dt>
+                        <dd class="col-sm-8"
+                            th:text="${sensor.tipo != null ? sensor.tipo : 'Sin tipo'}">
+                            Tipo
+                        </dd>
+
+                        <dt class="col-sm-4">Unidad de medida</dt>
+                        <dd class="col-sm-8" th:text="${sensor.unidadMedida}">Unidad</dd>
+
+                        <dt class="col-sm-4">Estado</dt>
+                        <dd class="col-sm-8" th:text="${sensor.estado}">Estado</dd>
+
+                        <dt class="col-sm-4">Latitud</dt>
+                        <dd class="col-sm-8" th:text="${sensor.latitud}">0.0</dd>
+
+                        <dt class="col-sm-4">Longitud</dt>
+                        <dd class="col-sm-8" th:text="${sensor.longitud}">0.0</dd>
+                    </dl>
+
+                    <div class="text-center mt-4">
+                        <a th:href="@{/sensors}" class="btn btn-outline-secondary">
+                            Volver al listado
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer th:replace="~{fragments/layout :: footer}"></footer>
+    </main>
+</div>
+
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+
+</body>
+</html>
