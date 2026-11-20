@@ -2,9 +2,9 @@ spring:
   application:
     name: parcelas
   datasource:
-    url: jdbc:mariadb://localhost:3306/ejemplo
-    username: usuario
-    password: usuario
+    url: "${SPRING_DATASOURCE_URL:jdbc:mariadb://localhost:3306/ejemplo}"
+    username: "${SPRING_DATASOURCE_USERNAME:usuario}"
+    password: "${SPRING_DATASOURCE_PASSWORD:usuario}"
   jpa:
     hibernate:
       ddl-auto: update
