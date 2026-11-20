@@ -15,12 +15,18 @@
 <div class="container mt-4">
     <div class="card mt-3 shadow-sm border-0 mx-auto" style="max-width: 600px;">
         <div class="card-header bg-success text-white">
-            <h5 class="mb-0">Registrar parcela</h5>
+            <h5 class="mb-0"
+                th:text="${parcela.id != null ? 'Editar parcela' : 'Registrar parcela'}">
+                Registrar parcela
+            </h5>
         </div>
+
         <div class="card-body">
             <form th:action="@{/parcelas}"
                   th:object="${parcela}"
                   method="post">
+
+                <input type="hidden" th:field="*{id}">
 
                 <div class="mb-3">
                     <label for="nombre" class="form-label">Nombre</label>
