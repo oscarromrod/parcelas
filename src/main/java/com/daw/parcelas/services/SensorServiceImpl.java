@@ -1,5 +1,6 @@
 package com.daw.parcelas.services;
 
+import com.daw.parcelas.exceptions.RecursoNoEncontradoException;
 import com.daw.parcelas.model.Sensor;
 import com.daw.parcelas.model.TipoSensor;
 import com.daw.parcelas.repository.SensorRepository;
@@ -41,7 +42,7 @@ public class SensorServiceImpl implements SensorService {
     @Override
     public Sensor getSensorById(Long id) {
         return sensorRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Sensor con id " + id + " no encontrado"));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Sensor con id " + id + " no encontrado"));
     }
 
     @Override

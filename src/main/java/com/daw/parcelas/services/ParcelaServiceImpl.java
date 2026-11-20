@@ -1,5 +1,6 @@
 package com.daw.parcelas.services;
 
+import com.daw.parcelas.exceptions.RecursoNoEncontradoException;
 import com.daw.parcelas.model.Parcela;
 import com.daw.parcelas.model.TipoCultivo;
 import com.daw.parcelas.repository.ParcelaRepository;
@@ -39,8 +40,7 @@ public class ParcelaServiceImpl implements ParcelaService {
     @Override
     public Parcela buscarPorId(Long id) {
         return parcelaRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "No existe la parcela con id " + id));
+                .orElseThrow(() -> new RecursoNoEncontradoException("Parcela con id  " + id + " no encontrada"));
     }
 
     //Guardar parcela
