@@ -26,6 +26,10 @@
                           th:object="${sensor}"
                           method="post">
 
+                        <div class="estado-alarma" th:if="${#fields.hasErrors()}">
+                            <p th:each="e : ${#fields.errors()}" th:text="${e}">Error general</p>
+                        </div>
+
                         <input type="hidden" th:field="*{id}">
 
                         <div class="mb-3">
