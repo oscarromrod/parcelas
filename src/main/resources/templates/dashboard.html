@@ -10,8 +10,9 @@
 
   <main class="app-main flex-grow-1 p-3 p-lg-4">
 
+    <h2>Dashboard</h2>
     <div class="row g-3">
-
+      <div th:replace="~{fragments/comunes :: tarjeta('Superficie total de parcelas (ha)', ${superficieTotal}, 'bi-vector-pen', 'danger')}"></div>
     </div>
 
     <footer th:replace="~{fragments/layout :: footer}"></footer>
