@@ -64,4 +64,9 @@ public class ParcelaServiceImpl implements ParcelaService {
                 .sum();
     }
 
+    @Override
+    public long contar() {
+        return parcelaRepository.count();
+    }
+
 }

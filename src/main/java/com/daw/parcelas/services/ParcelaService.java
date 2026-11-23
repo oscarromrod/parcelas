@@ -11,5 +11,6 @@ public interface ParcelaService {
     Parcela guardar(Parcela parcela);
     void eliminar(Long id);
     double superficieTotal();
+    long contar();
 
 }

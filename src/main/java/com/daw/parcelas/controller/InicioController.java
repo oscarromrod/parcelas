@@ -19,6 +19,7 @@ public class InicioController {
     public String inicio(Model model) {
         // Recopilar información
         model.addAttribute("superficieTotal", parcelaService.superficieTotal());
+        model.addAttribute("cantidadParcelas", parcelaService.contar());
         return "dashboard";
     }
 
