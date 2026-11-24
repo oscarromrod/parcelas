@@ -73,6 +73,19 @@ body {
   color: #fffdf5;
 }
 
+.theme-toggle {
+  border: 1px solid rgba(255, 255, 255, .28);
+  background: rgba(255, 255, 255, .1);
+  color: #fffdf5;
+}
+
+.theme-toggle:hover,
+.theme-toggle:focus-visible {
+  border-color: rgba(255, 255, 255, .5);
+  background: rgba(255, 255, 255, .2);
+  color: #fffdf5;
+}
+
 .avatar {
   display: grid;
   width: 35px;
@@ -506,4 +519,157 @@ body {
     scroll-behavior: auto !important;
     transition-duration: .01ms !important;
   }
+}
+
+/* El tema oscuro conserva los colores de marca y adapta las superficies. */
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --app-paper: #172019;
+  --app-surface: #202b23;
+  --app-ink: #e2e9df;
+  --app-muted: #aab8a9;
+  --app-border: #3a493d;
+  --app-sage: #2f4032;
+}
+
+html[data-theme="dark"] body {
+  background-image:
+    radial-gradient(ellipse at 92% 10%, rgba(215, 184, 109, .08), transparent 25rem),
+    linear-gradient(90deg, rgba(180, 210, 180, .025) 1px, transparent 1px);
+}
+
+html[data-theme="dark"] .sidebar {
+  background-color: #142019;
+}
+
+@media (min-width: 992px) {
+  html[data-theme="dark"] .sidebar {
+    border-bottom-color: #354638 !important;
+    background: #202e24 !important;
+  }
+
+  html[data-theme="dark"] .sidebar .offcanvas-body > .nav .nav-link {
+    color: #b8c8b5;
+  }
+
+  html[data-theme="dark"] .sidebar .offcanvas-body > .nav .nav-link:hover {
+    background: rgba(255, 255, 255, .08);
+    color: #eff7eb;
+  }
+}
+
+html[data-theme="dark"] .app-main h1,
+html[data-theme="dark"] .app-main h2 {
+  color: #dce8d9;
+}
+
+html[data-theme="dark"] .card {
+  border-color: #3a493d !important;
+  background: var(--app-surface);
+  color: var(--app-ink);
+  box-shadow: 0 9px 24px rgba(0, 0, 0, .18);
+}
+
+html[data-theme="dark"] .card-header {
+  border-bottom-color: var(--app-border);
+  background: #29372d;
+  color: #dce8d9;
+}
+
+html[data-theme="dark"] .table {
+  --bs-table-striped-bg: #263229;
+  --bs-table-hover-bg: #304034;
+  --bs-table-border-color: #3a493d;
+}
+
+html[data-theme="dark"] .table thead th {
+  background: #2f4032 !important;
+  color: #c1d2bd;
+}
+
+html[data-theme="dark"] .table tfoot th {
+  background: #29372d;
+  color: #c1d2bd;
+}
+
+html[data-theme="dark"] .table tbody td {
+  color: #c5d0c4;
+}
+
+html[data-theme="dark"] .text-body-secondary,
+html[data-theme="dark"] .text-secondary {
+  color: #aab8a9 !important;
+}
+
+html[data-theme="dark"] .text-success {
+  color: #83c77b !important;
+}
+
+html[data-theme="dark"] .app-main a:not(.btn):not(.nav-link):not(.navbar-brand) {
+  color: #83c77b;
+  text-decoration-color: rgba(131, 199, 123, .45);
+}
+
+html[data-theme="dark"] .app-main a:not(.btn):not(.nav-link):not(.navbar-brand):hover {
+  color: #b2e2a9;
+}
+
+html[data-theme="dark"] .form-control,
+html[data-theme="dark"] .form-select {
+  border-color: #526354;
+  background-color: #1b261e;
+  color: var(--app-ink);
+}
+
+html[data-theme="dark"] .input-group-text {
+  border-color: #526354;
+  background-color: #29372d;
+  color: #dce8d9;
+}
+
+html[data-theme="dark"] .form-control::placeholder {
+  color: #849285;
+}
+
+html[data-theme="dark"] .form-label {
+  color: #c5d0c4;
+}
+
+html[data-theme="dark"] .form-check-label {
+  color: #c5d0c4;
+}
+
+html[data-theme="dark"] .btn-outline-primary {
+  --bs-btn-color: #9bd392;
+  --bs-btn-border-color: #6d9467;
+  --bs-btn-hover-bg: #3e6838;
+  --bs-btn-hover-border-color: #83c77b;
+  --bs-btn-hover-color: #fff;
+}
+
+html[data-theme="dark"] .btn-outline-secondary {
+  --bs-btn-color: #b7c5b6;
+  --bs-btn-border-color: #687869;
+  --bs-btn-hover-bg: #3a493d;
+  --bs-btn-hover-border-color: #aab8a9;
+  --bs-btn-hover-color: #fff;
+}
+
+html[data-theme="dark"] .dropdown-menu {
+  --bs-dropdown-bg: #202b23;
+  --bs-dropdown-color: #dce8d9;
+  --bs-dropdown-border-color: #3a493d;
+  --bs-dropdown-link-color: #dce8d9;
+  --bs-dropdown-link-hover-bg: #304034;
+  --bs-dropdown-link-hover-color: #fff;
+}
+
+html[data-theme="dark"] .app-footer {
+  border-top-color: #3a493d;
+}
+
+html[data-theme="dark"] .alert {
+  --bs-alert-color: #dce8d9;
+  --bs-alert-bg: #29372d;
+  --bs-alert-border-color: #526354;
 }
