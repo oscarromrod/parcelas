@@ -88,8 +88,10 @@
       <a class="nav-link" th:classappend="${activo == 'parcelas'} ? 'active'" th:href="@{/parcelas}" href="#">
         <i class="bi bi-grid-3x3-gap"></i> Parcelas
       </a>
-      <a class="nav-link" th:classappend="${activo == 'cultivos'} ? 'active'" th:href="@{/cultivos}" href="#">
-        <i class="bi bi-flower2"></i> Cultivos
+      <a class="nav-link"
+         th:classappend="${activo == 'producciones'} ? 'active'"
+         th:href="@{/producciones}">
+        <i class="bi bi-flower2"></i> Producciones
       </a>
     </nav>
 
