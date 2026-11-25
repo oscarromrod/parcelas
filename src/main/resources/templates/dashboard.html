@@ -11,9 +11,54 @@
   <main class="app-main flex-grow-1 p-3 p-lg-4">
 
     <h2>Dashboard</h2>
-    <div class="row g-3">
+    <div class="row g-3"
+         th:with="ha=${#numbers.formatDecimal(superficieTotal, 1, 'POINT', 2, 'COMMA')} + ' ha',
+                  kg=${#numbers.formatDecimal(kilosTotales, 1, 'POINT', 1, 'COMMA')} + ' kg'">
       <div th:replace="~{fragments/comunes :: tarjeta('Parcelas totales', ${cantidadParcelas}, 'bi-map', 'success')}"></div>
-      <div th:replace="~{fragments/comunes :: tarjeta('Superficie total de parcelas (ha)', ${superficieTotal}, 'bi-vector-pen', 'danger')}"></div>
+      <div th:replace="~{fragments/comunes :: tarjeta('Superficie total', ${ha}, 'bi-vector-pen', 'danger')}"></div>
+      <div th:replace="~{fragments/comunes :: tarjeta('Kilos recolectados', ${kg}, 'bi-box-seam', 'primary')}"></div>
+      <div th:replace="~{fragments/comunes :: tarjeta('Partidas Extra', ${partidasExtra}, 'bi-award', 'warning')}"></div>
+    </div>
+
+    <div class="card shadow-sm border-0 mt-4">
+      <div class="card-header bg-transparent border-0 d-flex justify-content-between align-items-center pt-3 px-3">
+        <h3 class="h5 mb-0">Últimas recolecciones</h3>
+        <a th:href="@{/producciones}" class="btn btn-sm btn-outline-success">Ver todas</a>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Calidad</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:if="${#lists.isEmpty(ultimasRecolecciones)}">
+            <td colspan="4" class="text-center text-secondary py-3">
+              No hay recolecciones recientes.
+            </td>
+          </tr>
+          <tr th:each="p : ${ultimasRecolecciones}">
+            <td th:text="${#temporals.format(p.fechaRecoleccion, 'dd/MM/yyyy')}">21/10/2026</td>
+            <td>
+              <a th:href="@{/producciones/{id}(id=${p.id})}"
+                 th:text="${p.producto.etiqueta}">
+                Producto
+              </a>
+            </td>
+            <td th:text="${#numbers.formatDecimal(p.cantidadKg, 1, 'POINT', 1, 'COMMA') + ' kg'}">
+              0,0 kg
+            </td>
+            <td>
+              <th:block th:replace="~{fragments/comunes :: badgeCalidad(${p.calidad})}"></th:block>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <footer th:replace="~{fragments/layout :: footer}"></footer>

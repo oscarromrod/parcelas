@@ -11,4 +11,7 @@ public interface ProduccionService {
     Produccion buscarPorId(Long id);
     Produccion guardar(Produccion produccion);
     void eliminar(Long id);
+    double kilosTotales();
+    long contarPorCalidad(Calidad calidad);
+    List<Produccion> ultimas();
 }
