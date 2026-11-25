@@ -53,4 +53,25 @@ public class ProduccionServiceImpl implements ProduccionService {
     public void eliminar(Long id) {
         produccionRepository.deleteById(id);
     }
+
+    // Método para calcular el total de kilos producidos
+    @Override
+    public double kilosTotales() {
+        return produccionRepository.findAll()
+                .stream()
+                .mapToDouble(Produccion::getCantidadKg)
+                .sum();
+    }
+
+    // Método para contar la cantidad de producciones por calidad
+    @Override
+    public long contarPorCalidad(Calidad calidad) {
+        return produccionRepository.countByCalidad(calidad);
+    }
+
+    // Método para obtener las últimas 5 producciones registradas
+    @Override
+    public List<Produccion> ultimas() {
+        return produccionRepository.findTop5ByOrderByFechaRecoleccionDesc();
+    }
 }
