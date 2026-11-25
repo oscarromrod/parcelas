@@ -94,13 +94,11 @@
                                        class="btn btn-sm btn-outline-primary">
                                         Editar
                                     </a>
-                                    <form th:action="@{/producciones/{id}/eliminar(id=${p.id})}"
-                                          method="post" class="m-0"
-                                          onsubmit="return confirm('¿Seguro que quieres eliminar esta producción?');">
-                                        <button type="submit" class="btn btn-sm btn-outline-danger">
-                                            Eliminar
-                                        </button>
-                                    </form>
+                                    <button type="button" class="btn btn-sm btn-outline-danger"
+                                            data-bs-toggle="modal" data-bs-target="#modalEliminar"
+                                            th:data-url="@{/producciones/{id}/eliminar(id=${p.id})}">
+                                        Eliminar
+                                    </button>
                                 </div>
                             </td>
                         </tr>
@@ -118,7 +116,7 @@
                 </div>
             </div>
         </div>
-
+        <div th:replace="~{fragments/comunes :: modalEliminar}"></div>
         <footer th:replace="~{fragments/layout :: footer}"></footer>
     </main>
 </div>

@@ -88,14 +88,11 @@
                                         Editar
                                     </a>
 
-                                    <form th:action="@{/sensors/delete/{id}(id=${s.id})}"
-                                          method="post"
-                                          onsubmit="return confirm('¿Seguro que quieres eliminar este sensor?');"
-                                          class="m-0">
-                                        <button type="submit" class="btn btn-sm btn-outline-danger">
-                                            Eliminar
-                                        </button>
-                                    </form>
+                                    <button type="button" class="btn btn-sm btn-outline-danger"
+                                            data-bs-toggle="modal" data-bs-target="#modalEliminar"
+                                            th:data-url="@{/sensors/delete/{id}(id=${s.id})}">
+                                        Eliminar
+                                    </button>
                                 </div>
                             </td>
                         </tr>
@@ -103,8 +100,8 @@
                     </table>
                 </div>
             </div>
-
         </div>
+        <div th:replace="~{fragments/comunes :: modalEliminar}"></div>
         <footer th:replace="~{fragments/layout :: footer}"></footer>
     </main>
 </div>

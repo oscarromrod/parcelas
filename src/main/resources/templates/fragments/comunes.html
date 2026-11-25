@@ -26,4 +26,35 @@
         <span th:case="*" class="badge text-bg-secondary">Sin calidad</span>
     </th:block>
 
+    <!-- MODAL -->
+    <div th:fragment="modalEliminar"
+         class="modal fade"
+         id="modalEliminar"
+         tabindex="-1"
+         aria-labelledby="modalEliminarTitulo"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title fs-5" id="modalEliminarTitulo">
+                        Confirmar eliminación
+                    </h2>
+                    <button type="button" class="btn-close"
+                            data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+
+                <div class="modal-body">
+                    ¿Seguro que quieres eliminar este elemento?
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">Cancelar</button>
+                    <form id="formularioEliminar" method="post" class="m-0">
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </html>
