@@ -1,8 +1,9 @@
 <!doctype html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/layout :: head('Formulario de producción')}"></head>
-<body>
 
+<head th:replace="~{fragments/layout :: head('Formulario de producción')}"></head>
+
+<body>
 <nav th:replace="~{fragments/layout :: navbar}"></nav>
 
 <div class="d-flex">
@@ -24,17 +25,17 @@
                           th:with="hoy=${#temporals.format(#temporals.createToday(), 'yyyy-MM-dd')}"
                           method="post">
 
-                        <div class="estado-alarma" th:if="${#fields.hasErrors('*')}">
-                            <p th:each="e : ${#fields.errors('*')}" th:text="${e}">
-                                Error de validación
-                            </p>
+                        <div class="alert alert-danger" role="alert"
+                             th:if="${#fields.hasErrors('*')}">
+                            Revisa los campos indicados.
                         </div>
 
                         <input type="hidden" th:field="*{id}">
 
                         <div class="mb-3">
                             <label for="producto" class="form-label">Producto</label>
-                            <select id="producto" th:field="*{producto}"
+                            <select id="producto"
+                                    th:field="*{producto}"
                                     class="form-select"
                                     th:errorclass="is-invalid"
                                     required>
@@ -45,6 +46,9 @@
                                     Producto
                                 </option>
                             </select>
+                            <div class="invalid-feedback"
+                                 th:if="${#fields.hasErrors('producto')}"
+                                 th:errors="*{producto}">Error</div>
                         </div>
 
                         <div class="mb-3">
@@ -58,6 +62,9 @@
                                        required>
                                 <span class="input-group-text">kg</span>
                             </div>
+                            <div class="invalid-feedback d-block"
+                                 th:if="${#fields.hasErrors('cantidadKg')}"
+                                 th:errors="*{cantidadKg}">Error</div>
                         </div>
 
                         <div class="mb-3">
@@ -70,6 +77,9 @@
                                    th:errorclass="is-invalid"
                                    th:attr="max=${hoy}"
                                    required>
+                            <div class="invalid-feedback"
+                                 th:if="${#fields.hasErrors('fechaRecoleccion')}"
+                                 th:errors="*{fechaRecoleccion}">Error</div>
                         </div>
 
                         <fieldset class="mb-3">
@@ -90,9 +100,7 @@
                             </div>
                             <div class="invalid-feedback d-block"
                                  th:if="${#fields.hasErrors('calidad')}"
-                                 th:errors="*{calidad}">
-                                Selecciona una calidad.
-                            </div>
+                                 th:errors="*{calidad}">Error</div>
                         </fieldset>
 
                         <button type="submit" class="btn btn-success">Guardar</button>
