@@ -26,8 +26,9 @@
                           th:object="${sensor}"
                           method="post">
 
-                        <div class="estado-alarma" th:if="${#fields.hasErrors()}">
-                            <p th:each="e : ${#fields.errors()}" th:text="${e}">Error general</p>
+                        <div class="alert alert-danger" role="alert"
+                             th:if="${#fields.hasErrors('*')}">
+                            Revisa los campos indicados.
                         </div>
 
                         <input type="hidden" th:field="*{id}">
@@ -37,7 +38,11 @@
                             <input id="name" type="text"
                                    th:field="*{name}"
                                    class="form-control"
-                                   required>
+                                   th:errorclass="is-invalid"
+                                   required maxlength="60">
+                            <div class="invalid-feedback"
+                                 th:if="${#fields.hasErrors('name')}"
+                                 th:errors="*{name}">Error</div>
                         </div>
 
                         <div class="mb-3">
@@ -45,13 +50,19 @@
                             <input id="model" type="text"
                                    th:field="*{model}"
                                    class="form-control"
-                                   required>
+                                   th:errorclass="is-invalid"
+                                   required maxlength="60">
+                            <div class="invalid-feedback"
+                                 th:if="${#fields.hasErrors('model')}"
+                                 th:errors="*{model}">Error</div>
                         </div>
 
                         <div class="mb-3">
                             <label for="tipo" class="form-label">Tipo de sensor</label>
-                            <select id="tipo" th:field="*{tipo}"
+                            <select id="tipo"
+                                    th:field="*{tipo}"
                                     class="form-select"
+                                    th:errorclass="is-invalid"
                                     required>
                                 <option value="">-- Selecciona --</option>
                                 <option th:each="t : ${tipos}"
@@ -60,6 +71,9 @@
                                     Tipo
                                 </option>
                             </select>
+                            <div class="invalid-feedback"
+                                 th:if="${#fields.hasErrors('tipo')}"
+                                 th:errors="*{tipo}">Error</div>
                         </div>
 
                         <div class="mb-3">
@@ -67,7 +81,11 @@
                             <input id="unidadMedida" type="text"
                                    th:field="*{unidadMedida}"
                                    class="form-control"
-                                   required>
+                                   th:errorclass="is-invalid"
+                                   required maxlength="60">
+                            <div class="invalid-feedback"
+                                 th:if="${#fields.hasErrors('unidadMedida')}"
+                                 th:errors="*{unidadMedida}">Error</div>
                         </div>
 
                         <div class="mb-3">
@@ -75,20 +93,39 @@
                             <input id="estado" type="text"
                                    th:field="*{estado}"
                                    class="form-control"
-                                   required>
+                                   th:errorclass="is-invalid"
+                                   required maxlength="60">
+                            <div class="invalid-feedback"
+                                 th:if="${#fields.hasErrors('estado')}"
+                                 th:errors="*{estado}">Error</div>
                         </div>
 
                         <div class="row g-2">
                             <div class="col-md">
                                 <div class="mb-3">
                                     <label for="latitud" class="form-label">Latitud</label>
-                                    <input type="text" class="form-control" id="latitud" th:field="*{latitud}" required>
+                                    <input id="latitud" type="number"
+                                           th:field="*{latitud}"
+                                           class="form-control"
+                                           th:errorclass="is-invalid"
+                                           required min="-90" max="90" step="any">
+                                    <div class="invalid-feedback"
+                                         th:if="${#fields.hasErrors('latitud')}"
+                                         th:errors="*{latitud}">Error</div>
                                 </div>
                             </div>
+
                             <div class="col-md">
                                 <div class="mb-3">
                                     <label for="longitud" class="form-label">Longitud</label>
-                                    <input type="text" class="form-control" id="longitud" th:field="*{longitud}" required>
+                                    <input id="longitud" type="number"
+                                           th:field="*{longitud}"
+                                           class="form-control"
+                                           th:errorclass="is-invalid"
+                                           required min="-180" max="180" step="any">
+                                    <div class="invalid-feedback"
+                                         th:if="${#fields.hasErrors('longitud')}"
+                                         th:errors="*{longitud}">Error</div>
                                 </div>
                             </div>
                         </div>
