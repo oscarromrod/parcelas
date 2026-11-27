@@ -24,24 +24,24 @@ public class Produccion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "El producto es obligatorio")
+    @NotNull(message = "{produccion.producto.obligatorio}")
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Producto producto;
 
-    @NotNull(message = "La cantidad es obligatioria")
-    @DecimalMin(value = "0", inclusive = false, message = "La cantidad debe ser mayor que cero")
-    @DecimalMax(value = "1000000", message = "La cantidad no puede superar 1.000.000 kg")
+    @NotNull(message = "{produccion.cantidad.obligatoria}")
+    @DecimalMin(value = "0", inclusive = false, message = "{produccion.cantidad.positiva}")
+    @DecimalMax(value = "1000000", message = "{produccion.cantidad.maxima}")
     @Column(name = "cantidad_kg", nullable = false)
     private Double cantidadKg;
 
-    @NotNull(message = "La fecha de recolección es obligatoria")
-    @PastOrPresent(message = "La fecha no puede ser futura")
+    @NotNull(message = "{produccion.fecha.obligatoria}")
+    @PastOrPresent(message = "{produccion.fecha.futura}")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Column(name = "fecha_recoleccion", nullable = false)
     private LocalDate fechaRecoleccion;
 
-    @NotNull(message = "La calidad es obligatoria")
+    @NotNull(message = "{produccion.calidad.obligatoria}")
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Calidad calidad;

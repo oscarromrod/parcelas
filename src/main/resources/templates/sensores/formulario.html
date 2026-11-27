@@ -90,11 +90,15 @@
 
                         <div class="mb-3">
                             <label for="estado" class="form-label">Estado</label>
-                            <input id="estado" type="text"
-                                   th:field="*{estado}"
-                                   class="form-control"
-                                   th:errorclass="is-invalid"
-                                   required maxlength="60">
+                            <select id="estado"
+                                    th:field="*{estado}"
+                                    class="form-select"
+                                    th:errorclass="is-invalid"
+                                    required>
+                                <option value="">-- Selecciona un estado --</option>
+                                <option value="ACTIVO">ACTIVO</option>
+                                <option value="INACTIVO">INACTIVO</option>
+                            </select>
                             <div class="invalid-feedback"
                                  th:if="${#fields.hasErrors('estado')}"
                                  th:errors="*{estado}">Error</div>
