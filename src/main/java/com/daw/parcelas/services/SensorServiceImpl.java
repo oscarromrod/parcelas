@@ -21,14 +21,13 @@ public class SensorServiceImpl implements SensorService {
         this.sensorRepository = sensorRepository;
     }
 
-
-    //
+    // Devuelve todos los sensores sin aplicar filtros.
     @Override
     public List<Sensor> getAllSensors() {
         return sensorRepository.findAll();
     }
 
-
+    // Combina la búsqueda parcial por nombre con el filtro opcional de tipo.
     @Override
     public List<Sensor> getAllSensorsByNameAndTipo(String name, String tipo) {
         if (tipo.equals("TODOS")) {
@@ -38,26 +37,26 @@ public class SensorServiceImpl implements SensorService {
         }
     }
 
-
+    // Devuelve el sensor solicitado o indica que no existe.
     @Override
     public Sensor getSensorById(Long id) {
         return sensorRepository.findById(id)
                 .orElseThrow(() -> new RecursoNoEncontradoException("Sensor con id " + id + " no encontrado"));
     }
-
+    // Registra la consulta y obtiene los sensores de temperatura.
     @Override
     public List<Sensor> getAllSensorsTemperatura() {
         logger.debug("Obteniendo todos los sensores de temperatura");
         return sensorRepository.findAllByTipoEquals(TipoSensor.TEMPERATURA);
     }
 
-
+    // Persiste los datos del sensor recibido.
     @Override
     public void saveSensor(Sensor sensor) {
         sensorRepository.save(sensor);
     }
 
-
+    // Elimina el sensor indicado por su identificador.
     @Override
     public void deleteSensorById(Long id) {
         sensorRepository.deleteById(id);

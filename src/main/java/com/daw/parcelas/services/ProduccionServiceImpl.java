@@ -18,6 +18,7 @@ public class ProduccionServiceImpl implements ProduccionService {
         this.produccionRepository = produccionRepository;
     }
 
+    // Combina los filtros disponibles y conserva el orden por fecha descendente.
     @Override
     public List<Produccion> buscarPorProductoYCalidad(
             Producto producto, Calidad calidad) {
@@ -37,6 +38,7 @@ public class ProduccionServiceImpl implements ProduccionService {
         return produccionRepository.findAllByOrderByFechaRecoleccionDesc();
     }
 
+    // Devuelve la producción o lanza la excepción
     @Override
     public Produccion buscarPorId(Long id) {
         return produccionRepository.findById(id)
@@ -44,17 +46,19 @@ public class ProduccionServiceImpl implements ProduccionService {
                         "Producción con id " + id + " no encontrada"));
     }
 
+    // Guarda una producción nueva o actualiza la existente si ya tiene identificador.
     @Override
     public Produccion guardar(Produccion produccion) {
         return produccionRepository.save(produccion);
     }
 
+    // Elimina la producción indicada por su identificador.
     @Override
     public void eliminar(Long id) {
         produccionRepository.deleteById(id);
     }
 
-    // Método para calcular el total de kilos producidos
+    // Suma las cantidades registradas para mostrar el total en el panel.
     @Override
     public double kilosTotales() {
         return produccionRepository.findAll()
@@ -63,13 +67,13 @@ public class ProduccionServiceImpl implements ProduccionService {
                 .sum();
     }
 
-    // Método para contar la cantidad de producciones por calidad
+    // Cuenta las producciones de la calidad indicada para el indicador del panel.
     @Override
     public long contarPorCalidad(Calidad calidad) {
         return produccionRepository.countByCalidad(calidad);
     }
 
-    // Método para obtener las últimas 5 producciones registradas
+    // Obtiene las cinco producciones más recientes mediante una consulta del repositorio.
     @Override
     public List<Produccion> ultimas() {
         return produccionRepository.findTop5ByOrderByFechaRecoleccionDesc();

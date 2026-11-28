@@ -24,16 +24,19 @@ public class ProduccionController {
         this.produccionService = produccionService;
     }
 
+    // Publica las opciones del enum en las vistas
     @ModelAttribute("productos")
     public Producto[] productos() {
         return Producto.values();
     }
 
+    // Publica las opciones de calidad en las vistas
     @ModelAttribute("calidades")
     public Calidad[] calidades() {
         return Calidad.values();
     }
 
+    // Aplica los filtros seleccionados y prepara los totales de los resultados mostrados.
     @GetMapping
     public String listar(
             @RequestParam(required = false) Producto producto,
@@ -55,33 +58,35 @@ public class ProduccionController {
         return "producciones/lista";
     }
 
+    // Busca la producción solicitada
     @GetMapping("/{id}")
     public String detalle(@PathVariable Long id, Model model) {
         model.addAttribute("produccion", produccionService.buscarPorId(id));
         return "producciones/detalle";
     }
 
+    // Inicializa la fecha para que el formulario de alta proponga el día actual.
     @GetMapping("/nueva")
     public String nueva(Model model) {
         Produccion produccion = new Produccion();
-        // Se inicializa la fecha para que el formulario de alta proponga el día actual.
         produccion.setFechaRecoleccion(LocalDate.now());
 
         model.addAttribute("produccion", produccion);
         return "producciones/formulario";
     }
 
+    // Carga la producción existente para reutilizar el formulario en la edición.
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable Long id, Model model) {
         model.addAttribute("produccion", produccionService.buscarPorId(id));
         return "producciones/formulario";
     }
 
+    // Si hay errores, vuelve al formulario para conservar los valores
     @PostMapping
     public String guardar(
             @Valid @ModelAttribute("produccion") Produccion produccion,
             BindingResult resultado) {
-        // Si la validación falla, se vuelve al formulario para conservar los datos y mostrar los errores.
         if (resultado.hasErrors()) {
             return "producciones/formulario";
         }
@@ -90,6 +95,7 @@ public class ProduccionController {
         return "redirect:/producciones";
     }
 
+    // Elimina mediante POST
     @PostMapping("/{id}/eliminar")
     public String eliminar(@PathVariable Long id) {
         produccionService.eliminar(id);

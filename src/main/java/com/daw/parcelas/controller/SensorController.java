@@ -21,10 +21,10 @@ public class SensorController {
         this.sensorService = sensorService;
     }
 
+    // Conserva en el modelo los resultados y filtros del listado.
     @GetMapping
     public String getAllSensors(@RequestParam (required = false) String q,
                                 @RequestParam (required = false) String tipo, Model model) {
-        // Obtener todos los sensores
         if (q == null) q = "";
         if (tipo == null) tipo = "TODOS";
 
@@ -37,7 +37,7 @@ public class SensorController {
         return "sensores/lista";
     }
 
-
+    // Muestra únicamente sensores cuyo tipo es temperatura.
     @GetMapping("/temperatura")
     public String getAllSensorsTemperatura(Model model) {
         var sensors = sensorService.getAllSensorsTemperatura();
@@ -46,7 +46,7 @@ public class SensorController {
         return "sensores/lista";
     }
 
-
+    // Carga el sensor solicitado para mostrar su ficha.
     @GetMapping("/{id}")
     public String getSensorById(@PathVariable Long id, Model model) {
         var sensor = sensorService.getSensorById(id);
@@ -54,7 +54,7 @@ public class SensorController {
         return "sensores/detalle";
     }
 
-
+    // Proporciona un objeto vacío y los tipos disponibles para el alta.
     @GetMapping("/new")
     public String newSensor(Model model) {
         var tipos = TipoSensor.values();
@@ -63,7 +63,7 @@ public class SensorController {
         return "sensores/formulario";
     }
 
-
+    // Carga el sensor y las opciones de tipo para reutilizar el formulario en la edición.
     @GetMapping("/update/{id}")
     public String updateSensor(@PathVariable Long id, Model model) {
         var sensor = sensorService.getSensorById(id);
@@ -73,10 +73,9 @@ public class SensorController {
         return "sensores/formulario";
     }
 
-
+    // Ante errores de validación vuelve al formulario con los tipos disponibles.
     @PostMapping("/save")
     public String saveSensor(@Valid @ModelAttribute("sensor") Sensor sensor, BindingResult resultado, Model model) {
-        // Si la validación falla, se vuelve al formulario para conservar los datos y mostrar los errores.
         if (resultado.hasErrors()) {
             model.addAttribute("tipos", TipoSensor.values());
             return "sensores/formulario";
@@ -85,7 +84,7 @@ public class SensorController {
         return "redirect:/sensors";
     }
 
-
+    // Elimina el sensor solicitado y vuelve al listado.
     @PostMapping("/delete/{id}")
     public String deleteSensorById(@PathVariable Long id) {
         sensorService.deleteSensorById(id);
