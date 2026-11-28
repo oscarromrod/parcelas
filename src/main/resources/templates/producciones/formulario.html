@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: head('Formulario de producción')}"></head>
+
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="d-flex">
+    <aside th:replace="~{fragments/layout :: sidebar('producciones')}"></aside>
+
+    <main class="app-main flex-grow-1 p-3 p-lg-4">
+        <div class="container mt-4">
+            <div class="card shadow-sm border-0 mx-auto" style="max-width: 650px;">
+                <div class="card-header bg-success text-white">
+                    <h1 class="h5 mb-0"
+                        th:text="${produccion.id != null ? 'Editar producción' : 'Registrar producción'}">
+                        Registrar producción
+                    </h1>
+                </div>
+
+                <div class="card-body">
+                    <!--/* th:object enlaza los campos del formulario con el objeto y permite mostrar sus errores. */-->
+                    <form th:action="@{/producciones}"
+                          th:object="${produccion}"
+                          th:with="hoy=${#temporals.format(#temporals.createToday(), 'yyyy-MM-dd')}"
+                          method="post">
+
+                        <div class="alert alert-danger" role="alert"
+                             th:if="${#fields.hasErrors('*')}">
+                            Revisa los campos indicados.
+                        </div>
+
+                        <input type="hidden" th:field="*{id}">
+
+                        <div class="mb-3">
+                            <label for="producto" class="form-label">Producto</label>
+                            <select id="producto"
+                                    th:field="*{producto}"
+                                    class="form-select"
+                                    th:errorclass="is-invalid"
+                                    required>
+                                <option value="">-- Selecciona un producto --</option>
+                                <option th:each="p : ${productos}"
+                                        th:value="${p}"
+                                        th:text="${p.etiqueta}">
+                                    Producto
+                                </option>
+                            </select>
+                            <div class="invalid-feedback"
+                                 th:if="${#fields.hasErrors('producto')}"
+                                 th:errors="*{producto}">Error</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="cantidadKg" class="form-label">Cantidad</label>
+                            <div class="input-group">
+                                <input id="cantidadKg" type="number"
+                                       th:field="*{cantidadKg}"
+                                       class="form-control"
+                                       th:errorclass="is-invalid"
+                                       required max="1000000" step="any">
+                                <span class="input-group-text">kg</span>
+                            </div>
+                            <div class="invalid-feedback d-block"
+                                 th:if="${#fields.hasErrors('cantidadKg')}"
+                                 th:errors="*{cantidadKg}">Error</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="fechaRecoleccion" class="form-label">
+                                Fecha de recolección
+                            </label>
+                            <input id="fechaRecoleccion" type="date"
+                                   th:field="*{fechaRecoleccion}"
+                                   class="form-control"
+                                   th:errorclass="is-invalid"
+                                   th:attr="max=${hoy}"
+                                   required>
+                            <div class="invalid-feedback"
+                                 th:if="${#fields.hasErrors('fechaRecoleccion')}"
+                                 th:errors="*{fechaRecoleccion}">Error</div>
+                        </div>
+
+                        <fieldset class="mb-3">
+                            <legend class="form-label">Calidad</legend>
+                            <div th:each="c : ${calidades}"
+                                 class="form-check form-check-inline">
+                                <input type="radio"
+                                       class="form-check-input"
+                                       th:field="*{calidad}"
+                                       th:value="${c}"
+                                       th:errorclass="is-invalid"
+                                       required>
+                                <label class="form-check-label"
+                                       th:for="${#ids.prev('calidad')}"
+                                       th:text="${c.etiqueta}">
+                                    Calidad
+                                </label>
+                            </div>
+                            <div class="invalid-feedback d-block"
+                                 th:if="${#fields.hasErrors('calidad')}"
+                                 th:errors="*{calidad}">Error</div>
+                        </fieldset>
+
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                        <a th:href="@{/producciones}" class="btn btn-outline-secondary">
+                            Cancelar
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <footer th:replace="~{fragments/layout :: footer}"></footer>
+    </main>
+</div>
+
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

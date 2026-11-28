@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Producciones')}"></head>
+<body>
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="d-flex">
+    <aside th:replace="~{fragments/layout :: sidebar('producciones')}"></aside>
+
+    <main class="app-main flex-grow-1 p-3 p-lg-4">
+        <div class="container mt-4">
+            <h1 class="h3 mb-4">Producciones</h1>
+
+            <a th:href="@{/producciones/nueva}" class="btn btn-success mb-3">
+                + Nueva producción
+            </a>
+
+            <div class="card shadow-sm border-0 mb-3">
+                <div class="card-body">
+                    <form th:action="@{/producciones}" method="get" class="row g-2">
+                        <div class="col-md-5">
+                            <select name="producto" class="form-select">
+                                <option value="">Todos los productos</option>
+                                <option th:each="p : ${productos}"
+                                        th:value="${p}"
+                                        th:text="${p.etiqueta}"
+                                        th:selected="${productoSeleccionado == p}">
+                                    Producto
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-5">
+                            <select name="calidad" class="form-select">
+                                <option value="">Todas las calidades</option>
+                                <option th:each="c : ${calidades}"
+                                        th:value="${c}"
+                                        th:text="${c.etiqueta}"
+                                        th:selected="${calidadSeleccionada == c}">
+                                    Calidad
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-success w-100">
+                                Filtrar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card shadow-sm border-0">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover align-middle mb-0">
+                        <thead class="table-success">
+                        <tr>
+                            <th>N.º</th>
+                            <th>Fecha</th>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Calidad</th>
+                            <th>Acciones</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:if="${#lists.isEmpty(producciones)}">
+                            <td colspan="6" class="text-center text-secondary">
+                                No hay producciones para mostrar.
+                            </td>
+                        </tr>
+                        <tr th:each="p, iter : ${producciones}">
+                            <td th:text="${iter.count}">1</td>
+                            <td th:text="${#temporals.format(p.fechaRecoleccion, 'dd/MM/yyyy')}">
+                                21/10/2026
+                            </td>
+                            <td>
+                                <a th:href="@{/producciones/{id}(id=${p.id})}"
+                                   th:text="${p.producto.etiqueta}">
+                                    Producto
+                                </a>
+                            </td>
+                            <td th:text="${#numbers.formatDecimal(p.cantidadKg, 1, 'POINT', 1, 'COMMA') + ' kg'}">
+                                18.500,0 kg
+                            </td>
+                            <td>
+                                <th:block th:replace="~{fragments/comunes :: badgeCalidad(${p.calidad})}"></th:block>
+                            </td>
+                            <td>
+                                <div class="d-flex gap-1">
+                                    <a th:href="@{/producciones/editar/{id}(id=${p.id})}"
+                                       class="btn btn-sm btn-outline-primary">
+                                        Editar
+                                    </a>
+                                    <button type="button" class="btn btn-sm btn-outline-danger"
+                                            data-bs-toggle="modal" data-bs-target="#modalEliminar"
+                                            th:data-url="@{/producciones/{id}/eliminar(id=${p.id})}">
+                                        Eliminar
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                        <tfoot class="table-light">
+                        <tr>
+                            <th colspan="3">Partidas: <span th:text="${numeroPartidas}">0</span></th>
+                            <th th:text="${#numbers.formatDecimal(totalKilos, 1, 'POINT', 1, 'COMMA') + ' kg'}">
+                                0,0 kg
+                            </th>
+                            <th colspan="2">Total de los resultados mostrados</th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div th:replace="~{fragments/comunes :: modalEliminar}"></div>
+        <footer th:replace="~{fragments/layout :: footer}"></footer>
+    </main>
+</div>
+
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

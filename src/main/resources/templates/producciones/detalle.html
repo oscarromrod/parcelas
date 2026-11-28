@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Detalle de producción')}"></head>
+<body>
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="d-flex">
+    <aside th:replace="~{fragments/layout :: sidebar('producciones')}"></aside>
+
+    <main class="app-main flex-grow-1 p-3 p-lg-4">
+        <div class="container mt-4">
+            <div class="card shadow-sm border-0 mx-auto" style="max-width: 650px;">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h1 class="h4 mb-0" th:text="${produccion.producto.etiqueta}">
+                        Producto
+                    </h1>
+                    <th:block th:replace="~{fragments/comunes :: badgeCalidad(${produccion.calidad})}"></th:block>
+                </div>
+
+                <div class="card-body p-4">
+                    <dl class="row mb-0">
+                        <dt class="col-sm-5">Identificador</dt>
+                        <dd class="col-sm-7" th:text="${produccion.id}">1</dd>
+
+                        <dt class="col-sm-5">Fecha de recolección</dt>
+                        <dd class="col-sm-7"
+                            th:text="${#temporals.format(produccion.fechaRecoleccion, 'dd/MM/yyyy')}">
+                            21/10/2026
+                        </dd>
+
+                        <dt class="col-sm-5">Cantidad</dt>
+                        <dd class="col-sm-7"
+                            th:text="${#numbers.formatDecimal(produccion.cantidadKg, 1, 'POINT', 1, 'COMMA') + ' kg'}">
+                            18.500,0 kg
+                        </dd>
+
+                        <dt class="col-sm-5">Calidad</dt>
+                        <dd class="col-sm-7" th:text="${produccion.calidad.etiqueta}">
+                            Extra
+                        </dd>
+                    </dl>
+
+                    <div class="d-flex justify-content-between mt-4">
+                        <a th:href="@{/producciones}" class="btn btn-outline-secondary">
+                            Volver al listado
+                        </a>
+                        <a th:href="@{/producciones/editar/{id}(id=${produccion.id})}"
+                           class="btn btn-outline-primary">
+                            Editar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer th:replace="~{fragments/layout :: footer}"></footer>
+    </main>
+</div>
+
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

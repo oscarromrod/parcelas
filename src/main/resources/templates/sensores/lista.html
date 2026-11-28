@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: head('Listado de sensores')}"></head>
+
+<body>
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="d-flex">
+    <aside th:replace="~{fragments/layout :: sidebar('sensores')}"></aside>
+
+    <main class="app-main flex-grow-1 p-3 p-lg-4">
+
+        <div class="container mt-4">
+            <h1 class="h3 mb-4" th:text="${titulo != null ? titulo : 'Listado de sensores'}">Listado de sensores</h1>
+
+            <a th:href="@{/sensors/new}" class="btn btn-success mb-3">
+                + Nuevo sensor
+            </a>
+
+            <div class="card shadow-sm border-0 mb-3">
+                <div class="card-body">
+                    <form th:action="@{/sensors}" method="get" class="row g-2">
+                        <div class="col-md-6">
+                            <input type="text" name="q" th:value="${q}"
+                                   class="form-control" placeholder="Buscar sensor...">
+                        </div>
+                        <div class="col-md-4">
+                            <select name="tipo" class="form-select">
+                                <option value="TODOS" th:selected="${tipo == 'TODOS'}">Todos</option>
+                                <option th:each="t : ${tipos}"
+                                        th:value="${t}"
+                                        th:text="${t}"
+                                        th:selected="${tipo == t.name()}">
+                                    Tipo
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-success w-100">Buscar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card shadow-sm border-0">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover align-middle">
+                        <thead class="table-success">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Modelo</th>
+                            <th>Tipo</th>
+                            <th>Unidad</th>
+                            <th>Estado</th>
+                            <th>Ubicación (Lat, Lon)</th>
+                            <th>Acciones</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:if="${#lists.isEmpty(sensors)}">
+                            <td colspan="7" class="text-center text-secondary">
+                                No hay sensores registrados.
+                            </td>
+                        </tr>
+                        <tr th:each="s : ${sensors}">
+                            <td>
+                                <a th:href="@{/sensors/{id}(id=${s.id})}"
+                                   th:text="${s.name}">Nombre</a>
+                            </td>
+                            <td th:text="${s.model}">Modelo</td>
+                            <td th:text="${s.tipo != null ? s.tipo : 'Sin tipo'}">
+                                Tipo
+                            </td>
+                            <td th:text="${s.unidadMedida}">Unidad</td>
+                            <td th:text="${s.estado}">Estado</td>
+                            <td>
+                        <span th:if="${s.latitud != null and s.longitud != null}"
+                              th:text="${s.latitud + ', ' + s.longitud}">0.0, 0.0</span>
+                                <span th:if="${s.latitud == null or s.longitud == null}"
+                                      class="text-secondary">Sin ubicación</span>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <a th:href="@{/sensors/update/{id}(id=${s.id})}"
+                                       class="btn btn-sm btn-outline-primary me-1">
+                                        Editar
+                                    </a>
+
+                                    <button type="button" class="btn btn-sm btn-outline-danger"
+                                            data-bs-toggle="modal" data-bs-target="#modalEliminar"
+                                            th:data-url="@{/sensors/delete/{id}(id=${s.id})}">
+                                        Eliminar
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div th:replace="~{fragments/comunes :: modalEliminar}"></div>
+        <footer th:replace="~{fragments/layout :: footer}"></footer>
+    </main>
+</div>
+
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+
+</body>
+</html>
