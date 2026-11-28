@@ -64,6 +64,7 @@ public class ProduccionController {
     @GetMapping("/nueva")
     public String nueva(Model model) {
         Produccion produccion = new Produccion();
+        // Se inicializa la fecha para que el formulario de alta proponga el día actual.
         produccion.setFechaRecoleccion(LocalDate.now());
 
         model.addAttribute("produccion", produccion);
@@ -80,7 +81,7 @@ public class ProduccionController {
     public String guardar(
             @Valid @ModelAttribute("produccion") Produccion produccion,
             BindingResult resultado) {
-
+        // Si la validación falla, se vuelve al formulario para conservar los datos y mostrar los errores.
         if (resultado.hasErrors()) {
             return "producciones/formulario";
         }

@@ -67,6 +67,7 @@ public class ParcelaController {
     //Guarda la parcela recibida desde el formulario y redirige a la lista de parcelas
     @PostMapping
     public String guardar(@Valid @ModelAttribute ("parcela") Parcela parcela, BindingResult resultado, Model model) {
+        // Si la validación falla, se vuelve al formulario para conservar los datos y mostrar los errores.
         if (resultado.hasErrors()){
             model.addAttribute("tipos", TipoCultivo.values());
             return "parcelas/formulario";
