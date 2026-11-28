@@ -76,6 +76,7 @@ public class SensorController {
 
     @PostMapping("/save")
     public String saveSensor(@Valid @ModelAttribute("sensor") Sensor sensor, BindingResult resultado, Model model) {
+        // Si la validación falla, se vuelve al formulario para conservar los datos y mostrar los errores.
         if (resultado.hasErrors()) {
             model.addAttribute("tipos", TipoSensor.values());
             return "sensores/formulario";

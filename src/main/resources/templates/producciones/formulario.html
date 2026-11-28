@@ -20,6 +20,7 @@
                 </div>
 
                 <div class="card-body">
+                    <!--/* th:object enlaza los campos del formulario con el objeto y permite mostrar sus errores. */-->
                     <form th:action="@{/producciones}"
                           th:object="${produccion}"
                           th:with="hoy=${#temporals.format(#temporals.createToday(), 'yyyy-MM-dd')}"
